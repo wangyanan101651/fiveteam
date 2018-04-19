@@ -12,14 +12,14 @@ var http = require('http');
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '9999');
-// app.set('port', port);
+var port = normalizePort(process.env.PORT || '9988');//这是端口号，进行开接口
+//app.set('port', port);//是因为用的是http不用express起的服务
 
 /**
  * Create HTTP server.
  */
 
-var server = http.createServer(app);
+var server = http.createServer(app);//创建服务，遵循app（一些配置信息）规则
 
 /**
  * Listen on provided port, on all network interfaces.

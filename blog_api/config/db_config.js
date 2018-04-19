@@ -1,16 +1,16 @@
-module.exports = {
-    sql_config: {
+module.exports={
+    sql_config:{
         host:'101.201.235.23',
         user:'root',
-        password:"123456",
+        password:'daiming',
         port:3306,
-        database:'blogtest'
+        database:'daiming'
     },
-    dev_db: {
+    dev_db:{
         host:'127.0.0.1',
         user:'root',
-        password:"123456",
+        password:'daiming',
         port:3306,
-        database:'wangyanan'
+        database:'blog_sql'
     }
 }
