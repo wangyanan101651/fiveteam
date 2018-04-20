@@ -33,7 +33,7 @@ export default new router({
                     path:'add_two_class',
                     component:Addtwo
                 },{
-                    path:'/class_list',
+                    path:'class_list',
                     component:List
                 }
             ]

@@ -1,5 +1,6 @@
 <template>
-  <el-menu default-active="2" class="el-menu-vertical-demo self" >
+  <div class="left_wrapper">
+    <el-menu default-active="2" class="el-menu-vertical-demo self" >
       <el-submenu index="1">
         <template slot="title"><i class="el-icon-message"></i>文章操作</template>
           <el-menu-item index="1-1"><router-link to="/back/add_article">添加文章</router-link></el-menu-item>
@@ -25,6 +26,7 @@
           
       </el-submenu>
     </el-menu>
+  </div>
 </template>
 
 <script>
@@ -46,8 +48,12 @@ export default {
 </script>
 
 <style scoped>
-  .self{
+  .left_wrapper{
     width: 200px;
+    height: 100%;
+  }
+  .self{
+    width: 100%;
   }
 
 </style>

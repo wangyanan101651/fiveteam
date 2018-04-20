@@ -29,9 +29,10 @@ export default {
 }
 .main .left{
   float: left
+
 }
 .main .right{
   float: left;
-
+  width: calc(100% - 200px);
 }
 </style>
