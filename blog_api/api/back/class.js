@@ -296,7 +296,7 @@ router.get("/getAllClass",(req,res,next)=>{
       let data = {getOne,getTwo}
       return {
         code:"2081",
-        msg:"获取数据成功",
+        msg:"获取文章成功",
         data
       }
    }
@@ -305,10 +305,31 @@ router.get("/getAllClass",(req,res,next)=>{
    }).catch((err)=>{
       res.send({
         code:"2082",
-        msg:"获取数据失败"
+        msg:"获取文章失败"
       })
    })   
 })
 
-
+//提交文章
+router.post('/upArticle',(req,res,next)=>{
+    let {oneId,twoId,article_name,editer,content,daodu,recommend,art_show,enname_one}=req.body
+    var insertArticel=`insert into ${enname_one}(id,oneId,twoId,article_name,editer,content,daodu,recommend,art_show,enname_one,time) values(${Unique()}','${oneId}','${twoId}','${article_name}','${editer}','${content}','${daodu}','${recommend}','${art_show}','${enname_one}','${CreatTime()}')`
+    console.log(insertArticel)
+    console.log(article_name,content,daodu)
+      async function sqlAllHandle(){
+         await query(insertArticel)
+            return {
+              code:"2091",
+              msg:"提交文章成功"
+            }
+       }
+      sqlAllHandle().then((data)=>{
+          res.send(data)
+       }).catch((err)=>{
+          res.send({
+            code:"2092",
+            msg:"提交文章失败"
+          })
+      })
+})
 module.exports=router
