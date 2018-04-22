@@ -34,11 +34,11 @@ module.exports = {
     assetsPublicPath: '/',
     souceMap:"cheap-module-eval-source-map",
     proxyTable: {
-       "/api":"http://localhost:9988/"
-    },//做代理
+      "/api":"http://localhost:9999/"
+    },
     middleWare:function(app){
         app.get("/api",function(req,res,next){
-           res.send("1234")
+          res.send("1234")
         })
     }
   },

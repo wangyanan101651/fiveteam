@@ -14,13 +14,16 @@ var {
 
 // 一级类名的添加
 router.post("/insertOneClass",(req,res,next)=>{
+  
+  console.log(req.body)
   let {enname_one,cnname_one,enname_two,cnname_two}=req.body
     if(enname_one&&cnname_one&&enname_two&&cnname_two){
       let oneId=Unique()
       // 检测一级分类是否存在
       let testOneClass=`select * from one_class where enname='${enname_one}' OR cnname='${cnname_one}'`
       // 检测二级分类是否存在
-      
+      // let testTwoClass=`select * from two_class where enname='${enname_two}' OR cnname='${cnname_two}'`
+      // 插入一级分类
       var insertOne=`insert into one_class(id,enname,cnname,time) values('${oneId}','${enname_one}','${cnname_one}','${CreatTime()}')`
       // 插入二级分类
       var insertTwo=`insert into two_class(id,parent_id,enname,cnname,article_num,time) values('${Unique()}','${oneId}','${enname_two}','${cnname_two}','0','${CreatTime()}')`
@@ -28,7 +31,7 @@ router.post("/insertOneClass",(req,res,next)=>{
       var createTable=`CREATE TABLE ${enname_one} (LIST INT(11) UNIQUE NOT NULL AUTO_INCREMENT, id VARCHAR(255) UNIQUE PRIMARY KEY, oneId VARCHAR(255), twoId VARCHAR(255), article_name VARCHAR(255), editer VARCHAR(255), content LONGTEXT, time DATETIME, visitors INT, daodu VARCHAR(255), imgsrc VARCHAR(255), recommend TINYINT, art_show TINYINT);`
       async function sqlAllHandle() { 
           await searchHandle(testOneClass)
-        
+          // await searchHandle(testTwoClass)
           await sqlHandle(insertOne);
           await sqlHandle(insertTwo);
           await query(createTable);
@@ -52,6 +55,8 @@ router.post("/insertOneClass",(req,res,next)=>{
 
 
 // 二级类名的添加
+
+
 router.post("/insertTwoClass",(req,res,next)=>{
   let {oneId,enname_two,cnname_two}=req.body
     if(oneId&&enname_two&&cnname_two){
@@ -131,6 +136,179 @@ router.get("/Class",(req,res,next)=>{
        })   
 })
 
+// 删除一级分类
+router.post("/deleteClassOne",(req,res,next)=>{
+    let {id,enname_one}=req.body
+    if(id,enname_one){
+      let sqlone=`delete from one_class where id='${id}'`
+      let sqltwo=`delete from two_class where parent_id='${id}'`
+    console.log(sqlone,sqltwo)
+      let deleteTable=`drop table ${enname_one}`
+          async function sqlAllHandle() { 
+              await query(sqlone);
+              await query(sqltwo);
+              await query(deleteTable)
+              return {
+                code:"2041",
+                msg:"删除数据成功",
+              }
+           }
+           sqlAllHandle().then((data)=>{
+              res.send(data)
+           }).catch((err)=>{
+              res.send({
+                code:"2042",
+                msg:"删除数据失败"
+              })
+           })   
+    }
+    
+})
+
+// 二级分类删除最后一条，连带删除当前一级分类，当前文件表
+
+function deleteLastTwoClass(req,res,next){
+  let {oneId,twoId,enname_one}=req.body
+  let sqlone=`delete * from one_class where id='${oneId}'`
+  let sqltwo=`delete * from two_class where parent_id='${oneId}'`
+  let deleteTable=`drop table ${enname_one}`
+      async function sqlAllHandle() { 
+          await sqlHandle(sqlone);
+          await sqlHandle(sqltwo);
+          await query(deleteTable)
+          return {
+            code:"2051",
+            msg:"获取数据成功",
+          }
+       }
+       sqlAllHandle().then((data)=>{
+          res.send(data)
+       }).catch((err)=>{
+          res.send({
+            code:"2052",
+            msg:"获取数据失败"
+          })
+       })   
+}
+
+// 二级分类删除不是最后一条，只删除二级分类和文章
+
+function deleteTwoClass(req,res,next){
+  let {oneId,twoId,enname_one}=req.body
+  let deleteTwo=`delete * from two_class where id='${twoId}'`
+  let deleteArticle=`delete * from ${enname_one} where twoId='${twoId}'`
+      async function sqlAllHandle() { 
+          await sqlHandle(deleteTwo);
+          await sqlHandle(deleteArticle);
+          return {
+            code:"2051",
+            msg:"获取数据成功",
+          }
+       }
+       sqlAllHandle().then((data)=>{
+          res.send(data)
+       }).catch((err)=>{
+          res.send({
+            code:"2052",
+            msg:"获取数据失败"
+          })
+       })   
+}
+
+// 删除二级分类
+router.post("/deleteClassTwo",(req,res,next)=>{
+  let {oneId,twoId,enname_one}=req.body
+  if(oneId,twoId,enname_one){
+      let selectOneClass=`select * from two_class where parent_id='${oneId}'`
+      readHandle(selectOneClass).then((data)=>{
+        if(data.length>1){
+          deleteTwoClass(req,res,next)
+        }else{
+          deleteLastTwoClass(req,res,next)
+        }
+      })
+  } 
+})
+
+
+  // 更改一级分类
+router.post("/amendClassOne",(req,res,next)=>{
+  let {oldenname_one,enname_one,cnname_one}=req.body
+  
+  if(oldenname_one,enname_one,cnname_one){
+        let amendArticleTable=`alter table ${oldenname_one} rename ${enname_one}`
+        let amendClassOne=`update one_class set enname='${enname_one}',cnname='${cnname_one}'`
+        async function sqlAllHandle() { 
+          await sqlHandle(amendClassOne);
+          await sqlHandle(amendArticleTable);
+          return {
+            code:"2061",
+            msg:"获取数据成功",
+          }
+       }
+       sqlAllHandle().then((data)=>{
+          res.send(data)
+       }).catch((err)=>{
+          res.send({
+            code:"2062",
+            msg:"获取数据失败"
+          })
+       })   
+
+  } 
+})
+
+
+// 更改二级分类
+router.post("/amendClassTwo",(req,res,next)=>{
+  let {oldenname_two,enname_two,cnname_two}=req.body
+  
+  if(oldenname_two,enname_two,cnname_two){
+       
+        let amendClassTwo=`update two_class set enname='${enname_two}',cnname='${cnname_two}'`
+        async function sqlAllHandle() { 
+          await sqlHandle(amendClassTwo);
+       
+          return {
+            code:"2071",
+            msg:"获取数据成功",
+          }
+       }
+       sqlAllHandle().then((data)=>{
+          res.send(data)
+       }).catch((err)=>{
+          res.send({
+            code:"2072",
+            msg:"获取数据失败"
+          })
+       })   
+
+  } 
+})
+
+//获取一二级文章
+router.get("/getAllClass",(req,res,next)=>{
+  let getAllOneClass = `select * from one_class`
+  let getAllTwoClass = `select * from two_class`
+ async function sqlAllHandle(){
+  let getOne= await readHandle(getAllOneClass)//读取一级类名的表
+  let getTwo = await readHandle(getAllTwoClass)
+      let data = {getOne,getTwo}
+      return {
+        code:"2081",
+        msg:"获取数据成功",
+        data
+      }
+   }
+   sqlAllHandle().then((data)=>{
+      res.send(data)
+   }).catch((err)=>{
+      res.send({
+        code:"2082",
+        msg:"获取数据失败"
+      })
+   })   
+})
 
 
 module.exports=router
