@@ -35,7 +35,9 @@ var apiBackUser=require("./api/back/user.js")
 app.use('/api/back/user', apiBackUser);
 var apiBackClass=require("./api/back/class.js")
 app.use('/api/back/class', apiBackClass);
-
+//文章管理后台接口管理
+var apiArticleClass=require("./api/back/article.js")
+app.use('/api/back/article', apiArticleClass);
 
 
 
