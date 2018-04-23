@@ -8,7 +8,7 @@
   </div>
 </template>
 <script>
-import Left from '../common/Left'
+import Left from '../common/aside'
 import Heads from '../common/Heads'
 export default {
     data(){

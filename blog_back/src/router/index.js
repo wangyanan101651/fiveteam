@@ -12,6 +12,7 @@ let addTwoClass=resolve => require(['@/components/main/addTwoClass.vue'], resolv
 let classList=resolve => require(['@/components/main/classList.vue'], resolve)
 let add_article=resolve => require(['@/components/Article/add_article.vue'], resolve)
 let article_list=resolve => require(['@/components/Article/article_list.vue'], resolve)
+let Amend__class=resolve => require(['@/components/main/Amend__class.vue'], resolve)
 
 
 
@@ -59,6 +60,10 @@ export default new vueRouter({
         {
           path:"article_list",
           component:article_list          
+        },
+        {
+          path:"amend_class",
+          component:Amend__class
         }
       ]
      }
