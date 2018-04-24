@@ -1,10 +1,10 @@
 <template>
     <div class>
-        <h3>添加文章</h3>
+        <h3>增加文章</h3>
         <el-form :model="ruleForm" :rules="rules" ref="ruleForm" label-width="100px" class="demo-ruleForm">
             <!-- 文章标题 -->
-            <el-form-item label="文章标题" prop="name">
-                <el-input v-model="ruleForm.name"></el-input>
+            <el-form-item label="文章标题" prop="article_name">
+                <el-input v-model="ruleForm.article_name"></el-input>
             </el-form-item>
             <!-- 一级类名 -->
             <el-form-item label="一级类名" prop="oneId" >
@@ -146,32 +146,10 @@
         };
     },
     mounted (){
-         this.editor = UE.getEditor('editor');
+        this.editor = UE.getEditor('editor');
         console.log(this)
     },
     methods: {
-        // selectClassOne(){
-
-        // },
-        selectClassTwo(){
-            this.twoClass = []
-            this.oldlist.twoData.forEach(function(i) {
-                if(i.parent_id == this.ruleForm.oneId){
-                     this.twoClass.push(i)
-                }
-            },this)
-        },
-        changeClassOne(){
-            this.oldlist.oneData.forEach(function(i){
-                if(i.id == this.ruleForm.oneId){
-                    this.ruleForm.enname_one = i.enname
-                }
-            },this)
-
-            this.selectClassTwo()
-            console.log(this.twoClass,'opopop')
-        },
-
         submitForm(formName) {
 
             this.$refs[formName].validate((valid) => {
@@ -194,18 +172,7 @@
             this.$refs[formName].resetFields();
             this.value1 = ''
         }
-    },
-    created(){
-        this.axios.get("/api/back/article/ArticleClass").then((data) => {
-            this.oldlist = data.data.data;
-            this.oneClass = data.data.data.oneData
-            this.ruleForm.oneId = this.oneClass[2].id
-            this.ruleForm.enname_one = this.oneClass[2].enname
-            this.selectClassTwo()
-        })
     }
 }
     
 </script>
-<style>
-</style>
