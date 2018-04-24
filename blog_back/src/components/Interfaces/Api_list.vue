@@ -32,16 +32,15 @@
   </el-table>
 </template>
         <div>
-            <span class="demonstration">完整功能</span>
             <el-pagination
             @size-change="handleSizeChange"
             @current-change="handleCurrentChange"
-            :current-page="currentPage4"
-            :page-sizes="[5, 10, 15, 20,25]"
-            :page-size="100"
+            :current-page="nowPage"
+            :page-sizes="[2, 5, 10, 15]"
+            :page-size="everyrows"
             layout="total, sizes, prev, pager, next, jumper"
-            :total="1">
-            </el-pagination>
+            :total="this.olddata.length">
+        </el-pagination>
         </div>
   </div>
 </template>
@@ -50,9 +49,13 @@
     methods: {
       handleSizeChange(val) {
         console.log(`每页 ${val} 条`);
+         this.everyrows = val
+         this.tableData = this.olddata.slice((this.nowPage - 1) * this.everyrows, this.everyrows * this.nowPage)
       },
       handleCurrentChange(val) {
         console.log(`当前页: ${val}`);
+        this.nowPage = val
+        this.tableData = this.olddata.slice((val - 1) * this.everyrows, this.everyrows * val)
       },
       bianji(data,state){
           this.$router.push('/back/bianji/' + data.id)
@@ -66,7 +69,7 @@
       },
       shanchu(data){
              this.modle().then(()=>{
-                 this.axios.post('/api/jiekou/add/deletejiekou',{
+                 this.axios.post('/api/Interface/add/deletejiekou',{
                      id:data.id
                  }).then(data=>{
                      if(data.data.code=='4051'){
@@ -89,17 +92,23 @@
       return {
         currentPage4: 4,
         tableData: [],
-        datas:null
+        datas:null,
+        olddata:[],
+        everyrows:5,
+        nowPage:1
       };
     },
     mounted(){
         console.log(this.$route.query.type)
-        this.axios.get('/api/jiekou/add/houquJiekou').then(data=>{
+        this.axios.get('/api/Interface/add/houquJiekou').then(data=>{
             data.data.data.forEach(function(item,index) {
                 if(item.backorfont==this.$route.query.type){
-                    this.tableData.push(item)
+                   /// this.tableData.push(item)
+                   this.olddata.push(item)
                 }
             }, this);
+           this.tableData=this.olddata.slice(0, this.everyrows)
+           console.log(this.tableData,'kkk')
         })
     }
   }

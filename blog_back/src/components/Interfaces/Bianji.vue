@@ -47,31 +47,47 @@
           resource: '',
           canshu: '',
           region2:'',
-          shuju:''
+          shuju:'',
+          id:0
         }
       }
     },
     methods: {
-      onSubmit() {
-          //let {title,url,type,sendParams,getParams,backorfont}=req.body;
-        let {title,url,region,region2,canshu,shuju}=this.form;
-        this.axios.post('/api/jiekou/add/addJiekou',{
-            title,
-            url,
-            type:region2,
-            sendParams:canshu,
-            getParams:shuju,
-            backorfont:region
-        }).then(data=>{
-            if(data.data.code=='4021'){
-                   this.$message({
-                    message: data.data.msg,
-                    type: 'success',
-                    showClose:true
-                });
-            }
-        })
-      }
+        //let {id,title,url,type,sendParams,getParams,backorfont}=req.body
+        onSubmit(){
+            this.axios.post('/api/Interface/add/genggai',{
+                id:this.form.id,
+                title:this.form.title,
+                url:this.form.url,
+                type:this.form.region2,
+                sendparams:this.form.canshu,
+                getparams:this.form.shuju,
+                backorfont:this.form.region
+            }).then(data=>{
+                if(data.data.code=='4041'){
+                    this.$message({
+                        message: data.data.msg,
+                        type: 'success',
+                        showClose:true
+                    });
+                }
+            })
+        }
+    },
+    created(){
+      this.axios.post('/api/Interface/add/slected',{
+        id:this.$route.params.id
+      }).then(data=>{
+        let {id,title,url,backorfont,type,sendparams,getparams}=data.data.data[0];
+        this.form.id=id;
+        this.form.title=title;
+        this.form.url=url;
+        this.form.region=backorfont;
+        this.form.region2=type;
+        this.form.canshu=sendparams;
+        this.form.shuju=getparams;
+      })
+        console.log(this.$route.params.id)
     }
   }
 </script>
