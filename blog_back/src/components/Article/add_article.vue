@@ -6,16 +6,16 @@
             <el-form-item label="文章标题" prop="name">
                 <el-input v-model="ruleForm.name"></el-input>
             </el-form-item>
-            <!-- 一级类名 -->  
-            <el-form-item label="一级类名" prop="regionOne">
-                <el-select v-model="ruleForm.region" placeholder="请选择">
-                    <el-option :value='item.oneDate.id' v-for="(item,index) in ruleForm.arr" :key='index' :label='item.oneDate.cnname'></el-option>
+            <!-- 一级类名 -->
+            <el-form-item label="一级类名" prop="oneId" >
+                <el-select v-model="ruleForm.oneId" placeholder="请选择" @change = 'changeClassOne'>
+                    <el-option v-for="item in oneClass" :key='item.id' :label='item.cnname' :value='item.id'></el-option>
                 </el-select>
             </el-form-item>
             <!-- 二级类名 -->
-            <el-form-item label="二级类名" prop="regionTwo">
-                <el-select v-model="ruleForm.region" placeholder="请选择">
-                    <el-option :value='item.id' v-for="(item,index) in ruleForm.arr.twoDate" :key='index' :label='item.cnname'></el-option>
+            <el-form-item label="二级类名" prop="twoId">
+                <el-select v-model="ruleForm.twoId" placeholder="请选择">
+                    <el-option v-for="item in twoClass" :key='item.id' :label='item.cnname' :value='item.id'></el-option>
                 </el-select>
             </el-form-item>
             <!-- 是否显示 -->
@@ -48,6 +48,12 @@
                     placeholder="选择日期时间">
                 </el-date-picker>
             </el-form-item>
+            <!-- 富文本的承载容器 -->
+            <el-from-item lebel='内容' prop="">
+                <div id="editor">
+
+                </div>
+            </el-from-item>
             <!-- 提交、重置 -->
             <el-form-item>
                 <el-button type="primary" @click="submitForm('ruleForm')">提交</el-button>
@@ -61,8 +67,13 @@
     export default{
       data() {
         return {
+            oldlist:[],
+            oneClass:[],
+            twoClass:[],
             ruleForm: {
-                list:[],
+                oneId:"",
+                twoId:"",
+                enname_one:'',
                 name: '', //文章标题
                 regionOne:"",
                 regionTwo: "",
@@ -72,8 +83,7 @@
                 delivery: false, // ???????
                 resource: '',   //是否显示
                 resource1:'',  //是否推荐
-                desc: '',
-                arr:[]
+                desc: ''
                 },
                 rules: {
                 name: [
@@ -135,6 +145,28 @@
         };
     },
     methods: {
+        // selectClassOne(){
+
+        // },
+        selectClassTwo(){
+            this.twoClass = []
+            this.oldlist.twoData.forEach(function(i) {
+                if(i.parent_id == this.ruleForm.oneId){
+                     this.twoClass.push(i)
+                }
+            },this)
+        },
+        changeClassOne(){
+            this.oldlist.oneData.forEach(function(i){
+                if(i.id == this.ruleForm.oneId){
+                    this.ruleForm.enname_one = i.enname
+                }
+            },this)
+
+            this.selectClassTwo()
+            console.log(this.twoClass,'opopop')
+        },
+
         submitForm(formName) {
 
             this.$refs[formName].validate((valid) => {
@@ -152,21 +184,16 @@
         }
     },
     created(){
-        this.axios.get("/api/back/class/getAllClass").then((data) => {
-                data.data.data.getOne.map(i=>{
-                    let obj={
-                        oneDate:i,
-                        twoDate:[]
-                    }
-                    data.data.data.getTwo.forEach((item)=>{
-                        if(item.parent_id==i.id){
-                            obj.twoDate.push(item)
-                        }
-                    })
-                    this.ruleForm.arr.push(obj)
-                })
-                console.log(this.ruleForm.arr)
+        this.axios.get("/api/back/article/ArticleClass").then((data) => {
+            this.oldlist = data.data.data;
+            this.oneClass = data.data.data.oneData
+            this.ruleForm.oneId = this.oneClass[2].id
+            this.ruleForm.enname_one = this.oneClass[2].enname
+            this.selectClassTwo()
         })
+    },
+    mounted:{
+        
     }
 }
     

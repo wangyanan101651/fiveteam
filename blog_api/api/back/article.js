@@ -10,17 +10,17 @@ var {
   searchHandleNormal,  //检测有无某条数据，有为true
   query             // //基本操作
 }=require("../../config/db_connect")
-router.post("/updateArticle", (req, res, next) => {
+router.post("/ArticleClass", (req, res, next) => {
   let { article_name, visitors, editer,content,time,daodu,recommend,art_show,enname_one } = req.body
 
   if (article_name, visitors, editer,content,time,daodu,recommend,art_show,enname_one) {
-    let amendArticleTable = `alter table ${article_name} rename ${visitors}`
-    let amendClassOne = `update bawei set enname='${visitors}',cnname='${editer}'`
+    let oneData = `alter table ${article_name} rename ${visitors}`
+    let twoData = `update bawei set enname='${visitors}',cnname='${editer}'`
     async function sqlAllHandle() {
-      await sqlHandle(amendClassOne);
-      await sqlHandle(amendArticleTable);
+      await sqlHandle(oneData);
+      await sqlHandle(twoData);
       return {
-        code: "2061",
+        code: "3001",
         msg: "修改数据成功",
       }
     }
@@ -28,7 +28,7 @@ router.post("/updateArticle", (req, res, next) => {
       res.send(data)
     }).catch((err) => {
       res.send({
-        code: "2062",
+        code: "3002",
         msg: "修改数据失败"
       })
     })
