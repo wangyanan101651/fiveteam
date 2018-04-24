@@ -56,4 +56,101 @@ router.post("/deleteArticle", (req, res, next) => {
 
 })
 
+
+//获取文章接口
+router.get('/getArticleList',(req,res,next)=>{
+  var sqlone = `select * from one_class`
+  // var sqltwo = `select * from two_class`
+
+  //拼接查询文章sql
+  const connectSql = (oneClass) =>{
+    //根据一级类名拼接sql
+    var selectArticle = `select * from`
+    oneClass.forEach(function(i,index){
+      if(index<(oneClass.length-1)){
+        selectArticle+=`select * from ${i.enname} UNION ALL`
+      }else{
+        selectArticle+=`select * from ${i.enname}) talel_all order by time desc`
+      }
+    },this)
+    return selectArticle
+  }
+  //将一二级类名的中英文标识添加到文章列表
+  const connectArticle = (data) =>{
+    const {articleData,oneClass,twoClass} = data
+    return articleData.map(function(i){
+      oneClass.forEach(function(j){
+        if(j.id == i.oneId){
+          i.enname_one = j.enname
+          i.cnname_one = j.cnname
+        }
+      })
+      twoClass.forEach(function(i){
+        if(j.id == i.twoId){
+          i.enname_two = j.enname
+          i.cnname_two = j.cnname
+        }
+      })
+      return i
+    })
+  }
+  const asyncGetArticle = async function(){
+    let oneClass = await readHandle(sqlone)
+    let twoClass = await readHandle(sqltwo)
+
+    let articleDataList = await readHandle(connectArticle(oneClass))
+    return connectArticle({articleDataList,oneClass,twoClass})
+  }
+  asyncGetArticle().then((data)=>{
+    res.send({
+      code:'1221',
+      msg:'读取文章成功',
+      data
+    })
+  }).catch((err)=>{
+    res.send({
+      code:'1222',
+      msg:'读取文章失败'
+    })
+  })
+
+})
+
+ 
+//接口文档修改
+
+router.post('/amend',(req,res,next)=>{
+  let anendsql = `update apilist set title='${req.body.title}', url='${req.body.url}',type='${req.body.type}',sendparams='${req.body.sendparams}',getparams='${req.body.getparams}',backorfont='${req.body.backorfont}' where id='${req.body.id}', ` 
+  sqlHandle(anendsql).then((data)=>{
+    res.send({
+      code:'3401',
+      msg:'修改接口成功'
+    })
+  }).catch((err)=>{
+    res.send({
+      code:'3402',
+      msg:'修改接口失败'
+    })
+  })  
+  
+})
+
+
+
+//删除后台接口
+router.post('/delete',(req,res,next)=>{
+  let deleteId = `delete from apilist where id='${req.body.id}'`
+  sqlHandle(deleteId).then((data)=>{
+    res.send({
+      code:'3501',
+      msg:'删除接口成功'
+    })
+  }).catch((err)=>{
+    res.send({
+      code:'3502',
+      msg:'删除接口失败'
+    })
+  }) 
+})
+
 module.exports = router
