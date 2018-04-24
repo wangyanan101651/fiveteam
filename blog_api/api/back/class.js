@@ -291,7 +291,7 @@ router.get("/getAllClass",(req,res,next)=>{
   let getAllOneClass = `select * from one_class`
   let getAllTwoClass = `select * from two_class`
  async function sqlAllHandle(){
-  let getOne= await readHandle(getAllOneClass)//读取一级类名的表
+  let getOne= await readHandle(getAllOneClass)
   let getTwo = await readHandle(getAllTwoClass)
       let data = {getOne,getTwo}
       return {
@@ -314,17 +314,18 @@ router.get("/getAllClass",(req,res,next)=>{
 router.post('/upArticle',(req,res,next)=>{
     let {oneId,twoId,article_name,editer,content,daodu,recommend,art_show,enname_one}=req.body
     var insertArticel=`insert into ${enname_one}(id,oneId,twoId,article_name,editer,content,daodu,recommend,art_show,enname_one,time) values(${Unique()}','${oneId}','${twoId}','${article_name}','${editer}','${content}','${daodu}','${recommend}','${art_show}','${enname_one}','${CreatTime()}')`
-    console.log(insertArticel)
-    console.log(article_name,content,daodu)
-      async function sqlAllHandle(){
-         await query(insertArticel)
-            return {
-              code:"2091",
-              msg:"提交文章成功"
-            }
+    
+    var updataArticalNum = `updata two_class set article_num=num+1 where id = '${twoId}'`
+    const asyncInsertArticle = async function (){
+          await sqlHandle(insertArticel)
+          await sqlHandle(updataArticalNum)
+          return
        }
-      sqlAllHandle().then((data)=>{
-          res.send(data)
+      asyncInsertArticle().then((data)=>{
+          res.send({
+            code:"2091",
+            msg:"插入文章成功"
+          })
        }).catch((err)=>{
           res.send({
             code:"2092",
