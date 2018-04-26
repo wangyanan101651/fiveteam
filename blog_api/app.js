@@ -42,8 +42,7 @@ app.use('/api/back/article', apiArticleClass);
 var apiFontClass=require("./api/back/font.js")
 app.use('/api/back/font', apiFontClass);
 
-var apiFontClass=require("./api/font/article.js")
-app.use('/api/font/article', apiFontClass);
+ 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
