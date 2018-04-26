@@ -17,11 +17,12 @@ var {
 
 router.post("/getOnlyArticle",(req,res,next)=>{
     var {id} = req.body
-      let getOneClass = `select * from one_class`
-
+      let getOneClass = `select * from one_class`//读取一级分类
       var data = readHandle(getOneClass)
+      console.log(data)
       data.forEach((item,index)=>{
         const IdTest = `select * from '${item.enname}' where id='${id}'`
+        console.log(IdTest)
         readHandle(IdTest).then((data)=>{
           if(data.length>0){
             return {
@@ -40,7 +41,6 @@ router.post("/getOnlyArticle",(req,res,next)=>{
 
 
 //根据一级分类查询二级分类列表
-
 
 router.post("/getList",(req,res,next)=>{
         var {oneId} = req.body
@@ -61,4 +61,3 @@ router.post("/getList",(req,res,next)=>{
           })
        })   
 })
-//
