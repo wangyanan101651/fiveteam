@@ -12,31 +12,40 @@ var {
 }=require("../../config/db_connect")
 
 
-
 //根据文章id获取文章
-
 router.post("/getOnlyArticle",(req,res,next)=>{
     var {id} = req.body
       let getOneClass = `select * from one_class`//读取一级分类
-      var data = readHandle(getOneClass)
-      console.log(data)
-      data.forEach((item,index)=>{
+     readHandle(getOneClass).then((data)=>{
+       data.forEach((item,index)=>{
+          let arr = []
+           let all = []
         const IdTest = `select * from '${item.enname}' where id='${id}'`
         console.log(IdTest)
-        readHandle(IdTest).then((data)=>{
-          if(data.length>0){
-            return {
-              code:"4011",
-              msg:"数据查询成功"
-            }
+        readHandle(IdTest).then((datas)=>{
+          if(datas.length>0){
+            arr.push(datas)
           }else{
-            return{
-               code:"4012",
-               msg:"数据查询失败"
+           arr.push("")
+          }
+       if (data.length == arr.length) {
+          arr.forEach((a, b) => {
+            if (a) {
+              a.forEach((val, ind) => {
+                all.push(val)
+              })
             }
+          })
+        }
+        all.forEach((c, d) => {
+          if (d.id == id) {
+            d.enname_one = v.enname
+            res.send(d)
           }
         })
-      });
+      })
+    })
+  })
 })
 
 
