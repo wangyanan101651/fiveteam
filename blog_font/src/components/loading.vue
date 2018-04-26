@@ -1,17 +1,41 @@
 <template>
-  <div class="loading">
-     加载中。。。。
+  <div>
+      加载中。。
   </div>
 </template>
 
 <script>
-  export default {
-    name: 'loading',
-    data () {
-      return {}
-    },
-  }
+import {mapActions,mapState} from 'vuex'
+export default {
+  created(){
+    let a=this.$route.query.state
+    if(a==1){
+      this.axios.get('/api/front/article/getArticleAll').then(data=>{
+          this.getList(data)
+            this.$router.push('/index')
+      })
+    }else{
+        this.axios.get('/api/front/article/getArticleAll').then(data=>{
+          this.getTwo(data)
+            this.$router.push('/index2')
+      })
+    }
+    
+  },
+  methods:{
+    ...mapActions([
+      'getList',
+      'getTwo'
+    ])
+  },
+  // computed:{
+  //   ...mapState([
+  //     'data'
+  //   ])
+  // }
+}
 </script>
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+
+<style>
+
 </style>

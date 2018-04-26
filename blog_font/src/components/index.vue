@@ -19,7 +19,15 @@ export default {
   components:{
     headss,
     home
-  }
+  },
+   created(){
+      if(!this.data){
+         this.$router.push({path:'/loading',query:{state:1}})
+      }
+    },
+    computed: {
+        ...mapState(['data'])
+    }
 }
 </script>
 

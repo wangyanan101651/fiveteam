@@ -4,20 +4,27 @@ import Vue from "vue"
 Vue.use(vueRouter)
 
 
-let index=resolve => require(['@/components/index.vue'], resolve)
 
-
+import IndexBar from '@/components/index.vue'
+import Loading from '@/components/loading.vue'
+import IndexBar2 from '@/components/index2.vue'
 
 export default new vueRouter({
    routes:[
      {
        path:"/",
-       component:index,
+       component:IndexBar,
        redirect: "/index"
      },
      {
       path:"/index",
-      component:index
-     }
+      component:IndexBar
+     },{
+            path:'/loading',
+            component:Loading
+        },{
+             path:'/index2',
+            component:IndexBar2
+        }
    ]
 })
