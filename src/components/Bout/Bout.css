@@ -1,0 +1,42 @@
+.head{
+    height: 45px;width:100%;background: blue;color: #fff;position: relative;line-height: 35px;
+}
+.head span{
+    padding-left: 40px;font-size: 14px;
+}
+.icon-xiangzuo{
+    position: absolute;left:10px;top:4px;font-size: 12px;
+}
+.boxs{
+    width:100%;height:100%;display: flex;flex-direction: column;
+}
+.centent{
+    flex:1;display: flex;overflow-y: scroll;
+}
+.left{
+    height: 100%;
+}
+.right{
+    width: 50px;height:100%;
+}
+.right p{
+    line-height: 45px;text-align: center;
+}
+.content_cen{
+    flex:1;background: #fff;
+}
+h4{
+    background: #ccc;
+}
+.left p{
+    line-height: 35px;
+}
+.pp{
+    border-bottom: 1px solid #000;line-height: 45px;padding-left:10px;
+}
+.mm{
+    height: auto;
+}
+.write{
+    background: #fff;
+}

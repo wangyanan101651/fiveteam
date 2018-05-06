@@ -1,0 +1,6 @@
+.header{
+    height:45px;background: #fff;line-height: 45px;position: relative;padding-left:15px;padding-right:15px;
+}
+.icon-fangdajing{
+    position: absolute;right:15px;top:0;color: skyblue;
+}
