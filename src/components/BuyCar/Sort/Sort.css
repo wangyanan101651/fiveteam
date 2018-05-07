@@ -1,0 +1,25 @@
+.Sort{
+    width: 100%;
+    height: 100%;
+    background: #F5F5F6;
+}
+.carprice{
+    width: 95%;
+    height: 6rem;
+    margin: 0 auto;
+    margin: 8px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border: 1px solid #EEEDF3
+}
+.carprice p:nth-child(1){
+    background: #ABD4E4;
+    height: 3rem;
+    line-height: 3rem; 
+    padding-left: 1.2rem;
+}
+.carprice p:nth-child(2){
+    height: 3rem;
+    line-height: 3rem; 
+    padding-left: 1.2rem;    
+}

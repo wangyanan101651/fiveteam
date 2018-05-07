@@ -1,0 +1,34 @@
+.CityList{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column
+}
+
+.city{
+    background: skyblue;
+    width: 100%;
+    height: 3rem;
+    line-height: 3rem;
+}
+.city span{
+    padding: 5px;
+    color: #fff;
+    font-size: 1.2rem;
+}
+.actives{
+    border: 1px solid #f00
+}
+span{
+    padding: 5px;
+    font-size: 1.2rem;
+    line-height: 3rem;
+  }
+.pai{
+      display: flex;
+      justify-content: space-between;
+  }
+.address{
+    flex:1;
+    overflow-y: scroll;
+}
