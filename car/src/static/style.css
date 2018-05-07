@@ -1,0 +1,32 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+html,body,#root{
+    width: 100%;
+    height: 100%;
+}
+.app{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+.Main{
+    flex:1;
+    overflow-y:scroll;
+}
+.footer{
+    width: 100%;
+    height: 3rem;
+    display: flex;
+    justify-content: space-between;
+    align-content: center;
+}
+.footer a{
+    flex: 1;
+    line-height: 3rem;
+    font-size: 1.3rem;
+    text-align: center;
+    text-decoration: none;
+}

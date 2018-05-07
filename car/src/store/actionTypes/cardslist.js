@@ -1,0 +1,1 @@
+export const GET_CARDS_LIST = 'GET_CARDS_LIST'
