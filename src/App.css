@@ -11,7 +11,7 @@ body,html,#root,.app,.cen{
     width: 100%;height:45px;display: flex;background: skyblue;
 }
 .footer a{
-    width: 25%;text-align: center;line-height: 45px;
+    width: 16.6%;text-align: center;line-height: 45px;
 }
 .footer a .text{
     color: #fff;

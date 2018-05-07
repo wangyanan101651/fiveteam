@@ -1,0 +1,7 @@
+.m{width:100%}
+.m p{
+    line-height: 45px;padding-left: 15px;background: #fff;
+}
+.m p:nth-child(1){
+    border-bottom: 1px solid #ccc;
+}

@@ -1,0 +1,16 @@
+.route_box,.route_bigbox{
+    width:100%;height:100%;display: flex;flex-direction: column;
+}
+.route_head{
+    width:100%;height: 35px;;line-height: 35px;background: skyblue;display: flex;
+}
+.route_head a{
+    width:25%;text-align: center;
+}
+.icon-angle-down{
+    display: inline-block;height:100%;
+}
+.route_sec{
+    flex: 1;overflow-y: scroll;
+}
+

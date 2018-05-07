@@ -8,7 +8,6 @@ class App extends Component {
     
     render() {
         let {location}=this.props;
-        console.log(location,'-====')
         return (
             <div className='app'>
                 

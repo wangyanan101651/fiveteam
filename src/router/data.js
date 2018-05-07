@@ -4,7 +4,8 @@ import Home from '../components/Home/Home.jsx'
 import Buy from '../components/Buy'
 import Bout from '../components/Bout/Bout.jsx'
 import Mine from '../components/Mine/Mine.jsx'
-
+import Car from '../components/Car/Car.jsx'
+import Car_selling from '../components/Car_selling/Car_selling.jsx'
 // const Homes=Loadable({
 //     loader:Home,
 //     loading:Kk
@@ -28,12 +29,20 @@ export const data={
             text:'首页',
             to:'/'
         },{
-            text:'买车',
+            text:'城市1',
             to:'/buy'
         },{
-            text:'卖车',
+            text:'城市2',
             to:'/bout'
         },{
+            text:'买车',
+            to:'/car'
+        },
+        {   
+            text:'卖车',
+            to:'/car_selling'
+        },
+        {
             text:'我的',
             to:'/mine'
         }
@@ -53,6 +62,12 @@ export const data={
         {
             path:'/mine',
             component:Mine
+        },{
+            path:'/car',
+            component:Car
+        },{
+            path:'/car_selling',
+            component:Car_selling
         }
     ]
 }
