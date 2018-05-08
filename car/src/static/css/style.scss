@@ -1,0 +1,35 @@
+body,#app{
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  font-size: .12rem;
+  top: 0;
+  left: 0;
+  height: 100%;
+}
+
+html {
+  font-size: 625%;
+}
+
+.main {
+  flex: 1;
+  position: relative;
+  overflow-y: scroll;
+
+}
+
+.footer {
+  height: .4rem;
+  display: flex;
+  background: orange;
+  width:100%;
+  div {
+    flex:1;
+    flex-direction: column;
+    display: flex;
+    justify-content:  center;
+    align-items: center;
+  }
+}

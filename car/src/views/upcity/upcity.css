@@ -1,0 +1,15 @@
+.left ul{
+    list-style: none;
+    margin-left: 0px;
+    padding-left: 0px;
+}
+.section{
+    display:flex;
+}
+.left,.middle{
+    flex:1;
+    overflow-y: scroll;
+}
+.right{
+    width:20px;
+}

@@ -1,0 +1,43 @@
+.footer{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  border-top: 1px solid #ccc;
+  background: #fff;
+}
+.footer li span{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  font-size: .26rem;
+}
+.footer li span.iconfont{
+  font-size: .4rem;
+}
+.tab-active{
+  color: #fc4141;
+}
+.test{
+  z-index: 999999;
+}
+.index{
+  display: flex;
+  flex-direction: column;
+}
+.content{
+  flex:1
+}
+.foot{
+  height:35px;
+  background: skyblue;
+}
+body,html,.index{
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  width:100%;
+}
